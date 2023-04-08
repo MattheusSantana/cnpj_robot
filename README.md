@@ -4,3 +4,4 @@
 # playwright install
 
 # install pip3 install anticaptchaofficial
+# pip install aiofiles
