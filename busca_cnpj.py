@@ -1,7 +1,7 @@
 from playwright.async_api import async_playwright
 import time
 
-async def solve_captcha(cnpj):
+async def busca_cnpj(cnpj):
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=False)
         page = await browser.new_page()
