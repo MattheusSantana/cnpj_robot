@@ -20,10 +20,15 @@ async def search_cnpj(cnpj):
             document.getElementById('frmConsulta').submit();
             """)
 
+        page.on("request", handle_response)
+
         time.sleep(50)
         
         await browser.close()
 
+def handle_response(request_event):
+    print("request_event", request_event)
+    return request_event
 
 async def solve_captcha(site_key):
     load_dotenv()
