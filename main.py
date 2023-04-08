@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from playwright.async_api import async_playwright
-from busca_cnpj import busca_cnpj
+from search_cnpj_robot import search_cnpj
 
 app = FastAPI()
 
@@ -14,6 +14,6 @@ async def get_cnpj(cnpj):
     if(len(cnpj) != 14 or not cnpj.isdigit()):
         return 'cnpj inválido'
     
-    await busca_cnpj(cnpj)
+    await search_cnpj(cnpj)
 
     return cnpj
