@@ -44,6 +44,7 @@ async def solve_captcha(site_key):
     result = solver.solve_and_return_solution()
 
     if result != 0:
+        print('result', result)
         return result
     else:
         print(solver.err_string)
