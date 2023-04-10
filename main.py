@@ -1,6 +1,8 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response , status
 from search_cnpj_robot import search_cnpj
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+
 
 
 app = FastAPI()
@@ -13,13 +15,16 @@ def home():
 async def get_cnpj(cnpj):
 
     if(len(cnpj) != 14 or not cnpj.isdigit()):
-        return 'cnpj inválido'
-    
-    filename = await search_cnpj(cnpj)
-    if (filename):
-        with open(filename) as fh:
-            data = fh.read()
-            return Response(content=data, media_type="text/html")
-    
-    else:
-        return JSONResponse(content={"204": "NÃO FORAM ENCONTRADAS INFORMAÇÕES PARA O CNPJ INFORMADO"}, status_code=401)
+        return cnpj_error()
+    try:
+        filename = await search_cnpj(cnpj)
+        if (filename):
+            with open(filename) as fh:
+                data = fh.read()
+                return Response(content=data, media_type="text/html")
+    except:
+        return cnpj_error()
+
+
+def cnpj_error():
+    return JSONResponse(content=jsonable_encoder({"204": "NÃO FORAM ENCONTRADAS INFORMAÇÕES PARA O CNPJ INFORMADO"}))

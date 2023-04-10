@@ -17,13 +17,6 @@ async def submit_page(page, result):
             document.getElementById('frmConsulta').submit();""")
     return print("subimitted()")
 
-# async def submit(page, result):
-#     print("submit")
-#     async with page.expect_response("https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Comprovante.asp") as response_info:
-#         print("waiting for response")
-#         response = await response_info.value
-#         print('response', response)
-#         return response.ok
 
 
 async def search_cnpj(cnpj):
@@ -40,12 +33,8 @@ async def search_cnpj(cnpj):
         if (result == False):
             await browser.close()
             return False
-        
 
         await submit_page(page, result)
-
-        # response = await submit(page, result)
-
 
         content = await page.locator('//*[@id="principal"]').inner_html()
         filename = await make_html_response(content)
